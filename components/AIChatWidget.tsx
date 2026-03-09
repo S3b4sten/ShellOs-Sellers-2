@@ -1,10 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Sparkles, Loader2, Bot, Terminal } from 'lucide-react';
+import Markdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { GlassCard } from './GlassCard';
-import { ChatMessage } from '../types';
+import { ChatMessage, InventoryItem } from '../types';
 import { sendMessageToGemini } from '../services/geminiService';
 
-export const AIChatWidget: React.FC = () => {
+interface AIChatWidgetProps {
+  inventory?: InventoryItem[];
+}
+
+export const AIChatWidget: React.FC<AIChatWidgetProps> = ({ inventory }) => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -39,7 +46,10 @@ export const AIChatWidget: React.FC = () => {
     setInput('');
     setIsLoading(true);
 
-    const responseText = await sendMessageToGemini(input);
+    // Filter out the initial greeting if we want, or just pass all
+    const history = messages.filter(m => m.id !== '1');
+    
+    const responseText = await sendMessageToGemini(input, history, inventory);
 
     const modelMsg: ChatMessage = {
       id: (Date.now() + 1).toString(),
@@ -99,7 +109,35 @@ export const AIChatWidget: React.FC = () => {
                     : 'bg-white text-slate-800 border-slate-200 rounded-tl-none font-medium'
                 }`}
                 >
-                {msg.text}
+                  {msg.role === 'user' ? (
+                    msg.text
+                  ) : (
+                    <div className="markdown-body prose prose-sm prose-slate max-w-none">
+                      <Markdown
+                        components={{
+                          code({node, inline, className, children, ...props}: any) {
+                            const match = /language-(\w+)/.exec(className || '')
+                            return !inline && match ? (
+                              <SyntaxHighlighter
+                                style={vscDarkPlus as any}
+                                language={match[1]}
+                                PreTag="div"
+                                {...props}
+                              >
+                                {String(children).replace(/\n$/, '')}
+                              </SyntaxHighlighter>
+                            ) : (
+                              <code className={className} {...props}>
+                                {children}
+                              </code>
+                            )
+                          }
+                        }}
+                      >
+                        {msg.text}
+                      </Markdown>
+                    </div>
+                  )}
                 </div>
                 
                 {/* Timestamp */}
@@ -114,9 +152,12 @@ export const AIChatWidget: React.FC = () => {
           <div className="flex justify-start">
              <div className="flex flex-col items-start max-w-[85%]">
                 <span className="text-[10px] uppercase font-bold text-slate-400 mb-1 px-1">System</span>
-                <div className="bg-white p-4 rounded-lg rounded-tl-none border border-slate-200 flex items-center gap-3 shadow-sm">
-                <Loader2 className="animate-spin text-cobalt-600" size={16} />
-                <span className="text-xs text-slate-600 font-mono">Processing query...</span>
+                <div className="bg-white p-4 rounded-lg rounded-tl-none border border-slate-200 flex items-center gap-2 shadow-sm h-[52px]">
+                  <div className="flex space-x-1.5 items-center justify-center h-full px-2">
+                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  </div>
                 </div>
             </div>
           </div>

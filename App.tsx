@@ -26,7 +26,7 @@ const INITIAL_INVENTORY: InventoryItem[] = [
     price: 1250, 
     status: 'SOLD', 
     dateAdded: '2 hrs ago', 
-    imageUrl: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=100&q=80',
+    imageUrl: 'https://mikeeckman.com/wp-content/uploads/2016/10/Leica5.jpg',
     attributes: [{key: 'Lens', value: 'Summicron 50mm'}, {key: 'Year', value: '1954'}]
   },
   { 
@@ -72,6 +72,39 @@ const INITIAL_INVENTORY: InventoryItem[] = [
     dateAdded: '2 days ago', 
     imageUrl: 'https://images.unsplash.com/photo-1612196808214-b7e239e5f6b7?auto=format&fit=crop&w=100&q=80',
     attributes: [{key: 'Material', value: 'Stoneware'}, {key: 'Set Count', value: '3 pcs'}]
+  },
+  { 
+    id: '6', 
+    title: 'Sony Alpha a7 III', 
+    category: 'Photography', 
+    condition: 'Used - Excellent',
+    price: 1600, 
+    status: 'FOR_SALE', 
+    dateAdded: '3 days ago', 
+    imageUrl: 'https://images.unsplash.com/photo-1516724562728-afc824a36e84?auto=format&fit=crop&w=100&q=80',
+    attributes: [{key: 'Sensor', value: 'Full-Frame'}, {key: 'Megapixels', value: '24.2MP'}]
+  },
+  { 
+    id: '7', 
+    title: 'Herman Miller Aeron', 
+    category: 'Furniture', 
+    condition: 'Used - Good',
+    price: 650, 
+    status: 'FOR_SALE', 
+    dateAdded: '4 days ago', 
+    imageUrl: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?auto=format&fit=crop&w=100&q=80',
+    attributes: [{key: 'Size', value: 'Size B'}, {key: 'Color', value: 'Graphite'}]
+  },
+  { 
+    id: '8', 
+    title: 'Nintendo Switch OLED', 
+    category: 'Electronics', 
+    condition: 'New',
+    price: 350, 
+    status: 'FOR_SALE', 
+    dateAdded: '1 week ago', 
+    imageUrl: 'https://images.unsplash.com/photo-1617096200347-cb04ae810b1d?auto=format&fit=crop&w=100&q=80',
+    attributes: [{key: 'Storage', value: '64GB'}, {key: 'Color', value: 'White'}]
   },
 ];
 
@@ -170,7 +203,7 @@ export default function App() {
       case DashboardView.ASSISTANT:
         return (
             <div className="h-[calc(100vh-140px)]">
-                <AIChatWidget />
+                <AIChatWidget inventory={inventory} />
             </div>
         );
       case DashboardView.ANALYTICS:

@@ -1,14 +1,33 @@
 import { GoogleGenAI, Type } from "@google/genai";
+import { ChatMessage } from "../types";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-export const sendMessageToGemini = async (prompt: string): Promise<string> => {
+export const sendMessageToGemini = async (prompt: string, history: ChatMessage[] = [], inventoryContext?: any[]): Promise<string> => {
   try {
+    let systemInstruction = "You are a helpful, concise, and intelligent AI assistant embedded in a futuristic, organic-tech dashboard. Keep responses brief, insightful, and professional.";
+    
+    if (inventoryContext) {
+      systemInstruction += `\n\nYou have access to the user's current inventory data: ${JSON.stringify(inventoryContext)}. Use this data to answer questions about their items, sales, and inventory status.`;
+    }
+
+    // Convert history to Gemini format
+    const contents = history.map(msg => ({
+      role: msg.role === 'user' ? 'user' : 'model',
+      parts: [{ text: msg.text }]
+    }));
+
+    // Add the new prompt
+    contents.push({
+      role: 'user',
+      parts: [{ text: prompt }]
+    });
+
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: prompt,
+      contents: contents,
       config: {
-        systemInstruction: "You are a helpful, concise, and intelligent AI assistant embedded in a futuristic, organic-tech dashboard. Keep responses brief, insightful, and professional.",
+        systemInstruction,
       }
     });
     

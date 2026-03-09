@@ -9,6 +9,7 @@ interface InstantListingProps {
 }
 
 export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => {
+  const [mode, setMode] = useState<'auto' | 'manual'>('auto');
   const [image, setImage] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
@@ -47,10 +48,34 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
 
   const resetProcess = () => {
     setImage(null);
-    setListingData(null);
+    setListingData(mode === 'manual' ? {
+        title: '',
+        description: '',
+        condition: '',
+        price: 0,
+        category: '',
+        attributes: []
+    } : null);
     setIsScanning(false);
     setIsPublishing(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const handleModeSwitch = (newMode: 'auto' | 'manual') => {
+    setMode(newMode);
+    if (newMode === 'manual') {
+      setListingData({
+        title: '',
+        description: '',
+        condition: '',
+        price: 0,
+        category: '',
+        attributes: []
+      });
+    } else {
+      setListingData(null);
+      setImage(null);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -88,17 +113,19 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
   };
 
   const handlePublish = () => {
-      if (!listingData || !image) return;
+      if (!listingData) return;
+      if (mode === 'auto' && !image) return;
+      
       setIsPublishing(true);
       const newItem: InventoryItem = {
           id: Date.now().toString(),
-          title: listingData.title,
-          category: listingData.category,
-          condition: listingData.condition,
-          price: listingData.price,
+          title: listingData.title || 'Untitled Item',
+          category: listingData.category || 'Uncategorized',
+          condition: listingData.condition || 'Not specified',
+          price: listingData.price || 0,
           status: 'FOR_SALE',
           dateAdded: 'Just Now',
-          imageUrl: image,
+          imageUrl: image || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=100&q=80',
           attributes: listingData.attributes
       };
       setTimeout(() => {
@@ -108,15 +135,29 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
 
   return (
     <div className="h-full flex flex-col gap-6">
-      <GlassCard className="flex items-center justify-between bg-white border-slate-200">
+      <GlassCard className="flex flex-col md:flex-row items-start md:items-center justify-between bg-white border-slate-200 gap-4">
         <div>
            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
              <Sparkles className="text-cobalt-600" size={20} />
-             Instant Snapshot Listing
+             Instant Listing
            </h2>
            <p className="text-slate-500 text-sm mt-1">
-             AI-Assisted Inventory Ingestion Protocol.
+             AI-Assisted or Manual Inventory Ingestion Protocol.
            </p>
+        </div>
+        <div className="flex bg-slate-100 p-1 rounded-md border border-slate-200">
+          <button
+            onClick={() => handleModeSwitch('auto')}
+            className={`px-4 py-1.5 text-sm font-semibold rounded transition-colors ${mode === 'auto' ? 'bg-white text-cobalt-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+          >
+            Automatique
+          </button>
+          <button
+            onClick={() => handleModeSwitch('manual')}
+            className={`px-4 py-1.5 text-sm font-semibold rounded transition-colors ${mode === 'manual' ? 'bg-white text-cobalt-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+          >
+            Manuelle
+          </button>
         </div>
       </GlassCard>
 
@@ -176,7 +217,7 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
 
         {/* Form / Results Area */}
         <GlassCard className="flex flex-col h-full bg-white border-slate-200">
-           {!listingData ? (
+           {!listingData && mode === 'auto' ? (
              <div className="h-full flex flex-col items-center justify-center text-center p-8 opacity-40">
                <ImageIcon size={48} className="text-slate-300 mb-4" />
                <p className="text-slate-400 text-sm font-medium">Waiting for input stream...</p>
@@ -184,23 +225,27 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
            ) : (
              <div className="flex flex-col h-full">
                <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-100">
-                 <h3 className="text-base font-bold text-slate-900">Extracted Data</h3>
-                 <span className="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs rounded border border-emerald-200 font-bold uppercase tracking-wide flex items-center gap-1">
-                   <Check size={12} strokeWidth={3} /> Verified
-                 </span>
+                 <h3 className="text-base font-bold text-slate-900">{mode === 'auto' ? 'Extracted Data' : 'Manual Entry'}</h3>
+                 {mode === 'auto' && (
+                   <span className="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs rounded border border-emerald-200 font-bold uppercase tracking-wide flex items-center gap-1">
+                     <Check size={12} strokeWidth={3} /> Verified
+                   </span>
+                 )}
                </div>
 
                <div className="space-y-4 flex-1 overflow-y-auto pr-2">
-                 <div>
-                   <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Title</label>
-                   <input 
-                     type="text" 
-                     name="title"
-                     value={listingData.title}
-                     onChange={handleInputChange}
-                     className="block w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-md focus:ring-cobalt-500 focus:border-cobalt-500 p-2.5 font-medium"
-                   />
-                 </div>
+                 {listingData && (
+                   <>
+                     <div>
+                       <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Title</label>
+                       <input 
+                         type="text" 
+                         name="title"
+                         value={listingData.title}
+                         onChange={handleInputChange}
+                         className="block w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-md focus:ring-cobalt-500 focus:border-cobalt-500 p-2.5 font-medium"
+                       />
+                     </div>
 
                  <div>
                    <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Description</label>
@@ -279,10 +324,10 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
                     </div>
                     
                     <div className="bg-slate-50 border border-slate-200 rounded-md p-3 space-y-2">
-                        {listingData.attributes.length === 0 && (
+                        {listingData && listingData.attributes.length === 0 && (
                             <p className="text-xs text-slate-400 italic text-center py-2">No specs generated.</p>
                         )}
-                        {listingData.attributes.map((attr, idx) => (
+                        {listingData && listingData.attributes.map((attr, idx) => (
                             <div key={idx} className="flex gap-2 items-center">
                                 <input 
                                     type="text"
@@ -309,6 +354,8 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
                     </div>
                  </div>
 
+                   </>
+                 )}
                </div>
 
                <div className="pt-6 mt-6 border-t border-slate-200 flex gap-3">

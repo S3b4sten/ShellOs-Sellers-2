@@ -18,93 +18,93 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 const INITIAL_INVENTORY: InventoryItem[] = [
-  { 
-    id: '1', 
-    title: 'Vintage Leica Camera', 
-    category: 'Photography', 
+  {
+    id: '1',
+    title: 'Vintage Leica Camera',
+    category: 'Photography',
     condition: 'Vintage - Good',
-    price: 1250, 
-    status: 'SOLD', 
-    dateAdded: '2 hrs ago', 
+    price: 1250,
+    status: 'SOLD',
+    dateAdded: '2 hrs ago',
     imageUrl: 'https://mikeeckman.com/wp-content/uploads/2016/10/Leica5.jpg',
-    attributes: [{key: 'Lens', value: 'Summicron 50mm'}, {key: 'Year', value: '1954'}]
+    attributes: [{ key: 'Lens', value: 'Summicron 50mm' }, { key: 'Year', value: '1954' }]
   },
-  { 
-    id: '2', 
-    title: 'Eames Lounge Chair', 
-    category: 'Furniture', 
+  {
+    id: '2',
+    title: 'Eames Lounge Chair',
+    category: 'Furniture',
     condition: 'Like New',
-    price: 4500, 
-    status: 'FOR_SALE', 
-    dateAdded: '5 hrs ago', 
+    price: 4500,
+    status: 'FOR_SALE',
+    dateAdded: '5 hrs ago',
     imageUrl: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=100&q=80',
-    attributes: [{key: 'Material', value: 'Rosewood/Leather'}, {key: 'Style', value: 'Mid-Century'}]
+    attributes: [{ key: 'Material', value: 'Rosewood/Leather' }, { key: 'Style', value: 'Mid-Century' }]
   },
-  { 
-    id: '3', 
-    title: 'MacBook Pro M2', 
-    category: 'Electronics', 
+  {
+    id: '3',
+    title: 'MacBook Pro M2',
+    category: 'Electronics',
     condition: 'Used - Excellent',
-    price: 1800, 
-    status: 'FOR_SALE', 
-    dateAdded: '1 day ago', 
+    price: 1800,
+    status: 'FOR_SALE',
+    dateAdded: '1 day ago',
     imageUrl: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca4?auto=format&fit=crop&w=100&q=80',
-    attributes: [{key: 'Processor', value: 'M2 Pro'}, {key: 'RAM', value: '16GB'}, {key: 'Battery Cycle', value: '45'}]
+    attributes: [{ key: 'Processor', value: 'M2 Pro' }, { key: 'RAM', value: '16GB' }, { key: 'Battery Cycle', value: '45' }]
   },
-  { 
-    id: '4', 
-    title: 'Mechanical Keyboard', 
-    category: 'Electronics', 
+  {
+    id: '4',
+    title: 'Mechanical Keyboard',
+    category: 'Electronics',
     condition: 'Used - Good',
-    price: 250, 
-    status: 'SOLD', 
-    dateAdded: '2 days ago', 
+    price: 250,
+    status: 'SOLD',
+    dateAdded: '2 days ago',
     imageUrl: 'https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=100&q=80',
-    attributes: [{key: 'Switch Type', value: 'Cherry MX Brown'}, {key: 'Keycaps', value: 'PBT Double-shot'}]
+    attributes: [{ key: 'Switch Type', value: 'Cherry MX Brown' }, { key: 'Keycaps', value: 'PBT Double-shot' }]
   },
-  { 
-    id: '5', 
-    title: 'Ceramic Vase Set', 
-    category: 'Home Decor', 
+  {
+    id: '5',
+    title: 'Ceramic Vase Set',
+    category: 'Home Decor',
     condition: 'New',
-    price: 120, 
-    status: 'FOR_SALE', 
-    dateAdded: '2 days ago', 
+    price: 120,
+    status: 'FOR_SALE',
+    dateAdded: '2 days ago',
     imageUrl: 'https://images.unsplash.com/photo-1612196808214-b7e239e5f6b7?auto=format&fit=crop&w=100&q=80',
-    attributes: [{key: 'Material', value: 'Stoneware'}, {key: 'Set Count', value: '3 pcs'}]
+    attributes: [{ key: 'Material', value: 'Stoneware' }, { key: 'Set Count', value: '3 pcs' }]
   },
-  { 
-    id: '6', 
-    title: 'Sony Alpha a7 III', 
-    category: 'Photography', 
+  {
+    id: '6',
+    title: 'Sony Alpha a7 III',
+    category: 'Photography',
     condition: 'Used - Excellent',
-    price: 1600, 
-    status: 'FOR_SALE', 
-    dateAdded: '3 days ago', 
+    price: 1600,
+    status: 'FOR_SALE',
+    dateAdded: '3 days ago',
     imageUrl: 'https://images.unsplash.com/photo-1516724562728-afc824a36e84?auto=format&fit=crop&w=100&q=80',
-    attributes: [{key: 'Sensor', value: 'Full-Frame'}, {key: 'Megapixels', value: '24.2MP'}]
+    attributes: [{ key: 'Sensor', value: 'Full-Frame' }, { key: 'Megapixels', value: '24.2MP' }]
   },
-  { 
-    id: '7', 
-    title: 'Herman Miller Aeron', 
-    category: 'Furniture', 
+  {
+    id: '7',
+    title: 'Herman Miller Aeron',
+    category: 'Furniture',
     condition: 'Used - Good',
-    price: 650, 
-    status: 'FOR_SALE', 
-    dateAdded: '4 days ago', 
+    price: 650,
+    status: 'FOR_SALE',
+    dateAdded: '4 days ago',
     imageUrl: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?auto=format&fit=crop&w=100&q=80',
-    attributes: [{key: 'Size', value: 'Size B'}, {key: 'Color', value: 'Graphite'}]
+    attributes: [{ key: 'Size', value: 'Size B' }, { key: 'Color', value: 'Graphite' }]
   },
-  { 
-    id: '8', 
-    title: 'Nintendo Switch OLED', 
-    category: 'Electronics', 
+  {
+    id: '8',
+    title: 'Nintendo Switch OLED',
+    category: 'Electronics',
     condition: 'New',
-    price: 350, 
-    status: 'FOR_SALE', 
-    dateAdded: '1 week ago', 
+    price: 350,
+    status: 'FOR_SALE',
+    dateAdded: '1 week ago',
     imageUrl: 'https://images.unsplash.com/photo-1617096200347-cb04ae810b1d?auto=format&fit=crop&w=100&q=80',
-    attributes: [{key: 'Storage', value: '64GB'}, {key: 'Color', value: 'White'}]
+    attributes: [{ key: 'Storage', value: '64GB' }, { key: 'Color', value: 'White' }]
   },
 ];
 
@@ -123,7 +123,7 @@ export default function App() {
   });
 
   const [inventory, setInventory] = useState<InventoryItem[]>(INITIAL_INVENTORY);
-  
+
   const [settings, setSettings] = useState<AppSettings>({
     emailNotifications: true,
     autoPublish: false,
@@ -140,7 +140,7 @@ export default function App() {
   // Derived state for Search
   const filteredInventory = useMemo(() => {
     const lowerQ = searchQuery.toLowerCase();
-    return inventory.filter(item => 
+    return inventory.filter(item =>
       item.title.toLowerCase().includes(lowerQ) ||
       item.category.toLowerCase().includes(lowerQ)
     );
@@ -151,91 +151,91 @@ export default function App() {
     setInventory(prev => [newItem, ...prev]);
     addNotification('New Listing', `${newItem.title} added to inventory.`);
     setTimeout(() => {
-        setActiveView(DashboardView.OVERVIEW);
+      setActiveView(DashboardView.OVERVIEW);
     }, 1000);
   };
 
   const handleDeleteItem = (id: string) => {
     const item = inventory.find(i => i.id === id);
     if (confirm('Are you sure you want to delete this record?')) {
-        setInventory(prev => prev.filter(i => i.id !== id));
-        if(item) addNotification('Item Deleted', `${item.title} removed from database.`);
+      setInventory(prev => prev.filter(i => i.id !== id));
+      if (item) addNotification('Item Deleted', `${item.title} removed from database.`);
     }
   };
 
   const handleToggleStatus = (id: string) => {
     setInventory(prev => prev.map(item => {
-        if (item.id === id) {
-            const newStatus = item.status === 'FOR_SALE' ? 'SOLD' : 'FOR_SALE';
-            addNotification('Status Updated', `${item.title} is now ${newStatus}.`);
-            return { ...item, status: newStatus };
-        }
-        return item;
+      if (item.id === id) {
+        const newStatus = item.status === 'FOR_SALE' ? 'SOLD' : 'FOR_SALE';
+        addNotification('Status Updated', `${item.title} is now ${newStatus}.`);
+        return { ...item, status: newStatus };
+      }
+      return item;
     }));
   };
 
   const addNotification = (title: string, message: string) => {
-      const newNotif: Notification = {
-          id: Date.now().toString(),
-          title,
-          message,
-          time: 'Just now',
-          read: false
-      };
-      setNotifications(prev => [newNotif, ...prev]);
+    const newNotif: Notification = {
+      id: Date.now().toString(),
+      title,
+      message,
+      time: 'Just now',
+      read: false
+    };
+    setNotifications(prev => [newNotif, ...prev]);
   };
 
   const clearNotifications = () => {
-      setNotifications([]);
-      setShowNotifications(false);
+    setNotifications([]);
+    setShowNotifications(false);
   };
 
   const renderContent = () => {
     switch (activeView) {
       case DashboardView.OVERVIEW:
-        return <Dashboard 
-            inventory={filteredInventory} 
-            onDelete={handleDeleteItem} 
-            onToggleStatus={handleToggleStatus} 
+        return <Dashboard
+          inventory={filteredInventory}
+          onDelete={handleDeleteItem}
+          onToggleStatus={handleToggleStatus}
         />;
       case DashboardView.NEW_LISTING:
         return <InstantListing onPublish={handlePublishListing} />;
       case DashboardView.ASSISTANT:
         return (
-            <div className="h-[calc(100vh-140px)]">
-                <AIChatWidget inventory={inventory} />
-            </div>
+          <div className="h-[calc(100vh-140px)]">
+            <AIChatWidget inventory={inventory} />
+          </div>
         );
       case DashboardView.ANALYTICS:
         return <Analytics inventory={inventory} />;
       case DashboardView.PROFILE:
         return (
-            <ProfileSettings 
-                user={user} 
-                onSave={(updatedUser) => {
-                    setUser(updatedUser);
-                    addNotification('Profile Updated', 'User details saved successfully.');
-                    setTimeout(() => setActiveView(DashboardView.OVERVIEW), 500);
-                }}
-                onCancel={() => setActiveView(DashboardView.OVERVIEW)}
-            />
+          <ProfileSettings
+            user={user}
+            onSave={(updatedUser) => {
+              setUser(updatedUser);
+              addNotification('Profile Updated', 'User details saved successfully.');
+              setTimeout(() => setActiveView(DashboardView.OVERVIEW), 500);
+            }}
+            onCancel={() => setActiveView(DashboardView.OVERVIEW)}
+          />
         );
       default:
         return (
-            <SettingsView 
-                settings={settings}
-                onUpdate={(newSettings) => {
-                    setSettings(newSettings);
-                    addNotification('Configuration Saved', 'System preferences updated.');
-                }}
-            />
+          <SettingsView
+            settings={settings}
+            onUpdate={(newSettings) => {
+              setSettings(newSettings);
+              addNotification('Configuration Saved', 'System preferences updated.');
+            }}
+          />
         );
     }
   };
 
   return (
     <div className={`min-h-screen bg-slate-100 flex font-sans text-slate-800 ${settings.darkMode ? 'dark-mode-simulated' : ''}`}>
-      
+
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 w-full z-50 bg-slate-900 text-white border-b border-slate-700 p-3 flex justify-between items-center shadow-md">
         <div className="font-bold tracking-tight">SHELL<span className="text-cobalt-500">OS</span></div>
@@ -252,9 +252,9 @@ export default function App() {
       `}>
         {/* Brand Area */}
         <div className="h-16 flex items-center px-6 border-b border-slate-800 bg-slate-950">
-           <Command className="text-cobalt-500 mr-2" size={20} />
-           <span className="font-bold text-white tracking-wide text-lg">SHELL<span className="text-cobalt-500">OS</span></span>
-           <span className="ml-auto text-[10px] font-mono bg-slate-800 px-1.5 py-0.5 rounded text-slate-400">v2.4</span>
+          <Command className="text-cobalt-500 mr-2" size={20} />
+          <span className="font-bold text-white tracking-wide text-lg">SHELL<span className="text-cobalt-500">OS</span></span>
+          <span className="ml-auto text-[10px] font-mono bg-slate-800 px-1.5 py-0.5 rounded text-slate-400">v2.4</span>
         </div>
 
         {/* Navigation */}
@@ -269,8 +269,8 @@ export default function App() {
               }}
               className={`
                 w-full flex items-center justify-between px-3 py-2.5 rounded-md text-sm font-medium transition-colors
-                ${activeView === item.id 
-                  ? 'bg-cobalt-600 text-white shadow-sm' 
+                ${activeView === item.id
+                  ? 'bg-cobalt-600 text-white shadow-sm'
                   : 'text-slate-400 hover:bg-slate-800 hover:text-slate-100'
                 }
               `}
@@ -283,20 +283,20 @@ export default function App() {
             </button>
           ))}
         </nav>
-        
+
         {/* User Footer */}
         <div className="p-4 border-t border-slate-800 bg-slate-900/50">
-           <div 
-             onClick={() => setActiveView(DashboardView.PROFILE)}
-             className="flex items-center gap-3 p-2 rounded-md hover:bg-slate-800 cursor-pointer transition-colors"
-           >
-              <img src={user.avatarUrl} alt={user.name} className="w-8 h-8 rounded-md bg-slate-700 object-cover border border-slate-600" />
-              <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white truncate">{user.name}</p>
-                  <p className="text-xs text-slate-500 truncate">{user.email}</p>
-              </div>
-              <LogOut size={14} className="text-slate-500 hover:text-white" />
-           </div>
+          <div
+            onClick={() => setActiveView(DashboardView.PROFILE)}
+            className="flex items-center gap-3 p-2 rounded-md hover:bg-slate-800 cursor-pointer transition-colors"
+          >
+            <img src={user.avatarUrl} alt={user.name} className="w-8 h-8 rounded-md bg-slate-700 object-cover border border-slate-600" />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-white truncate">{user.name}</p>
+              <p className="text-xs text-slate-500 truncate">{user.email}</p>
+            </div>
+            <LogOut size={14} className="text-slate-500 hover:text-white" />
+          </div>
         </div>
       </aside>
 
@@ -311,55 +311,55 @@ export default function App() {
             <span className="h-4 w-px bg-slate-300 mx-2 hidden md:block"></span>
             <span className="text-xs text-slate-500 hidden md:block font-mono">WS-1092 / PROD</span>
           </div>
-          
+
           <div className="flex items-center gap-3">
             <div className="relative hidden md:block">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-              <input 
-                type="text" 
-                placeholder="Search inventory..." 
+              <input
+                type="text"
+                placeholder="Search inventory..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-slate-100 border border-slate-200 pl-9 pr-4 py-1.5 rounded-md text-sm text-slate-700 focus:outline-none focus:ring-1 focus:ring-cobalt-500 focus:border-cobalt-500 w-64 transition-all"
               />
             </div>
-            
-            <div className="relative">
-                <button 
-                    onClick={() => setShowNotifications(!showNotifications)}
-                    className="p-2 text-slate-500 hover:bg-slate-100 rounded-md relative border border-transparent hover:border-slate-200 transition-colors"
-                >
-                    <Bell size={18} />
-                    {notifications.some(n => !n.read) && (
-                        <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
-                    )}
-                </button>
 
-                {/* Notification Dropdown */}
-                {showNotifications && (
-                    <div className="absolute right-0 top-full mt-2 w-80 bg-white border border-slate-200 shadow-xl rounded-md z-50 animate-fade-in-up">
-                        <div className="flex items-center justify-between p-3 border-b border-slate-100 bg-slate-50">
-                            <span className="text-xs font-bold uppercase text-slate-500 tracking-wider">Notifications</span>
-                            <button onClick={clearNotifications} className="text-xs text-cobalt-600 hover:underline">Clear all</button>
-                        </div>
-                        <div className="max-h-64 overflow-y-auto">
-                            {notifications.length === 0 ? (
-                                <div className="p-4 text-center text-xs text-slate-400 italic">No new notifications</div>
-                            ) : (
-                                notifications.map(notif => (
-                                    <div key={notif.id} className="p-3 border-b border-slate-100 hover:bg-slate-50 transition-colors relative">
-                                        {!notif.read && <span className="absolute left-1 top-4 w-1.5 h-1.5 bg-cobalt-500 rounded-full"></span>}
-                                        <div className="pl-2">
-                                            <p className="text-sm font-semibold text-slate-800">{notif.title}</p>
-                                            <p className="text-xs text-slate-500 mt-0.5">{notif.message}</p>
-                                            <p className="text-[10px] text-slate-400 mt-2 text-right font-mono">{notif.time}</p>
-                                        </div>
-                                    </div>
-                                ))
-                            )}
-                        </div>
-                    </div>
+            <div className="relative">
+              <button
+                onClick={() => setShowNotifications(!showNotifications)}
+                className="p-2 text-slate-500 hover:bg-slate-100 rounded-md relative border border-transparent hover:border-slate-200 transition-colors"
+              >
+                <Bell size={18} />
+                {notifications.some(n => !n.read) && (
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
                 )}
+              </button>
+
+              {/* Notification Dropdown */}
+              {showNotifications && (
+                <div className="absolute right-0 top-full mt-2 w-80 bg-white border border-slate-200 shadow-xl rounded-md z-50 animate-fade-in-up">
+                  <div className="flex items-center justify-between p-3 border-b border-slate-100 bg-slate-50">
+                    <span className="text-xs font-bold uppercase text-slate-500 tracking-wider">Notifications</span>
+                    <button onClick={clearNotifications} className="text-xs text-cobalt-600 hover:underline">Clear all</button>
+                  </div>
+                  <div className="max-h-64 overflow-y-auto">
+                    {notifications.length === 0 ? (
+                      <div className="p-4 text-center text-xs text-slate-400 italic">No new notifications</div>
+                    ) : (
+                      notifications.map(notif => (
+                        <div key={notif.id} className="p-3 border-b border-slate-100 hover:bg-slate-50 transition-colors relative">
+                          {!notif.read && <span className="absolute left-1 top-4 w-1.5 h-1.5 bg-cobalt-500 rounded-full"></span>}
+                          <div className="pl-2">
+                            <p className="text-sm font-semibold text-slate-800">{notif.title}</p>
+                            <p className="text-xs text-slate-500 mt-0.5">{notif.message}</p>
+                            <p className="text-[10px] text-slate-400 mt-2 text-right font-mono">{notif.time}</p>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </header>

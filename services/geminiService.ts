@@ -1,12 +1,26 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { ChatMessage } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+let aiInstance: GoogleGenAI | null = null;
+
+const getAI = () => {
+  if (aiInstance) return aiInstance;
+
+  const apiKey = process.env.API_KEY;
+  if (!apiKey || apiKey === 'undefined') {
+    console.warn("Gemini API Key is missing. AI features will be disabled. Check your .env file and GEMINI_API_KEY variable.");
+    // Return a dummy instance to avoid further crashes, but it won't work for real requests
+    aiInstance = new GoogleGenAI({ apiKey: "AIza_MISSING_KEY" });
+  } else {
+    aiInstance = new GoogleGenAI({ apiKey });
+  }
+  return aiInstance;
+};
 
 export const sendMessageToGemini = async (prompt: string, history: ChatMessage[] = [], inventoryContext?: any[]): Promise<string> => {
   try {
     let systemInstruction = "You are a helpful, concise, and intelligent AI assistant embedded in a futuristic, organic-tech dashboard. Keep responses brief, insightful, and professional.";
-    
+
     if (inventoryContext) {
       systemInstruction += `\n\nYou have access to the user's current inventory data: ${JSON.stringify(inventoryContext)}. Use this data to answer questions about their items, sales, and inventory status.`;
     }
@@ -23,6 +37,7 @@ export const sendMessageToGemini = async (prompt: string, history: ChatMessage[]
       parts: [{ text: prompt }]
     });
 
+    const ai = getAI();
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: contents,
@@ -30,7 +45,7 @@ export const sendMessageToGemini = async (prompt: string, history: ChatMessage[]
         systemInstruction,
       }
     });
-    
+
     return response.text || "I couldn't generate a response.";
   } catch (error) {
     console.error("Gemini API Error:", error);
@@ -40,6 +55,7 @@ export const sendMessageToGemini = async (prompt: string, history: ChatMessage[]
 
 export const analyzeImage = async (base64Image: string, mimeType: string) => {
   try {
+    const ai = getAI();
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: {

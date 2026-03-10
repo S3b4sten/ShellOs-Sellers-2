@@ -10,6 +10,7 @@
     "start": "serve -s dist -l 3001"
   },
   "dependencies": {
+    "serve": "^14.2.6",
     "@google/genai": "^1.41.0",
     "@tailwindcss/typography": "^0.5.19",
     "@types/react-syntax-highlighter": "^15.5.13",

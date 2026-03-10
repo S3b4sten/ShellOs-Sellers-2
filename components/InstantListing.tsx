@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Upload, Sparkles, Check, DollarSign, Tag, RefreshCw, X, ArrowRight, Loader2, Image as ImageIcon, Sliders, Plus, Trash2, ShieldCheck } from 'lucide-react';
+import { Upload, Camera, Sparkles, Check, DollarSign, Tag, RefreshCw, X, ArrowRight, Loader2, Image as ImageIcon, Sliders, Plus, Trash2, ShieldCheck } from 'lucide-react';
 import { GlassCard } from './GlassCard';
 import { analyzeImage } from '../services/geminiService';
 import { ListingData, InventoryItem, Attribute } from '../types';
@@ -14,7 +14,11 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
   const [isScanning, setIsScanning] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [listingData, setListingData] = useState<ListingData | null>(null);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -115,6 +119,52 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
     }
   };
 
+  const startCamera = async () => {
+    setIsCameraOpen(true);
+    setImage(null);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' },
+        audio: false
+      });
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (err) {
+      console.error("Error accessing camera:", err);
+      setIsCameraOpen(false);
+    }
+  };
+
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    setIsCameraOpen(false);
+  };
+
+  const capturePhoto = () => {
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext('2d');
+      if (context) {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL('image/jpeg');
+        setImage(dataUrl);
+        stopCamera();
+
+        if (mode === 'auto') {
+          startAnalysis(dataUrl, 'image/jpeg');
+        }
+      }
+    }
+  };
+
   const handlePublish = () => {
     if (!listingData) return;
     if (mode === 'auto' && !image) return;
@@ -168,22 +218,52 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
         {/* Upload / Image Area */}
         <div className="bg-slate-200/50 rounded-lg border-2 border-dashed border-slate-300 flex flex-col items-center justify-center min-h-[400px] lg:h-full relative overflow-hidden group hover:bg-slate-200 hover:border-slate-400 transition-all">
 
-          {!image ? (
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              className="cursor-pointer flex flex-col items-center p-12 text-center"
-            >
-              <div className="w-16 h-16 bg-white rounded-md border border-slate-300 flex items-center justify-center mb-4 shadow-sm">
-                <Upload size={24} className="text-slate-500" />
+          {!image && !isCameraOpen ? (
+            <div className="flex flex-col items-center p-12 text-center w-full">
+              <div className="flex gap-4 mb-4">
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-16 h-16 bg-white rounded-md border border-slate-300 flex items-center justify-center shadow-sm cursor-pointer hover:border-cobalt-400 hover:text-cobalt-600 transition-all"
+                >
+                  <Upload size={24} className="text-slate-500" />
+                </div>
+                <div
+                  onClick={startCamera}
+                  className="w-16 h-16 bg-white rounded-md border border-slate-300 flex items-center justify-center shadow-sm cursor-pointer hover:border-cobalt-400 hover:text-cobalt-600 transition-all"
+                >
+                  <Camera size={24} className="text-slate-500" />
+                </div>
               </div>
               <h3 className="text-base font-bold text-slate-700 mb-1">
-                {mode === 'auto' ? 'Upload Source Image' : 'Ajouter une photo'}
+                {mode === 'auto' ? 'Source Image' : 'Ajouter une photo'}
               </h3>
               <p className="text-xs text-slate-500 max-w-xs">
-                {mode === 'auto'
-                  ? 'Drag & drop or click to select file. System accepts JPG/PNG.'
-                  : 'Cliquez pour sélectionner une photo. Remplissez ensuite le formulaire manuellement.'}
+                Upload a file or take a photo with your camera to begin.
               </p>
+            </div>
+          ) : isCameraOpen ? (
+            <div className="relative w-full h-full flex flex-col items-center justify-center bg-black">
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                className="w-full h-full object-cover"
+              />
+              <canvas ref={canvasRef} className="hidden" />
+              <div className="absolute bottom-6 flex gap-4">
+                <button
+                  onClick={capturePhoto}
+                  className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all border-4 border-slate-300"
+                >
+                  <div className="w-10 h-10 bg-white rounded-full border-2 border-slate-900" />
+                </button>
+                <button
+                  onClick={stopCamera}
+                  className="absolute -right-16 top-1/2 -translate-y-1/2 p-2 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-all"
+                >
+                  <X size={20} />
+                </button>
+              </div>
             </div>
           ) : (
             <div className="relative w-full h-full flex items-center justify-center bg-slate-900">

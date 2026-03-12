@@ -16,6 +16,7 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
   const [listingData, setListingData] = useState<ListingData | null>(null);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -120,6 +121,12 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
   };
 
   const startCamera = async () => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      cameraInputRef.current?.click();
+      return;
+    }
+
     setIsCameraOpen(true);
     setImage(null);
     try {
@@ -134,6 +141,7 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
     } catch (err) {
       console.error("Error accessing camera:", err);
       setIsCameraOpen(false);
+      cameraInputRef.current?.click();
     }
   };
 
@@ -298,6 +306,14 @@ export const InstantListing: React.FC<InstantListingProps> = ({ onPublish }) => 
             ref={fileInputRef}
             onChange={handleFileChange}
             accept="image/*"
+            className="hidden"
+          />
+          <input
+            type="file"
+            ref={cameraInputRef}
+            onChange={handleFileChange}
+            accept="image/*"
+            capture="environment"
             className="hidden"
           />
         </div>

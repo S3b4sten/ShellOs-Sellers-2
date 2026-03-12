@@ -39,7 +39,7 @@ export const sendMessageToGemini = async (prompt: string, history: ChatMessage[]
 
     const ai = getAI();
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash',
       contents: contents,
       config: {
         systemInstruction,
@@ -49,7 +49,7 @@ export const sendMessageToGemini = async (prompt: string, history: ChatMessage[]
     return response.text || "I couldn't generate a response.";
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "Sorry, I encountered an error processing your request.";
+    return "Sorry, I encountered an error (v4). Check model availability.";
   }
 };
 
@@ -57,7 +57,7 @@ export const analyzeImage = async (base64Image: string, mimeType: string) => {
   try {
     const ai = getAI();
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash',
       contents: {
         parts: [
           {
